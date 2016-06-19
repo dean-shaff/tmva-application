@@ -140,13 +140,16 @@ class BDT_Application(object):
             str_lab = "{}/{}/{}".format(int(lab[0]), int(lab[1]), int(lab[2]))
             wf = fwf[str_lab][...]
             ax.plot(wf,drawstyle='steps-mid')
-            ax.set_title("BDT score: {:.2f}".format(score))
+            
+            ax.set_xlim([0, wf.shape[0]]) 
+            ax.set_ylabel("ADC counts above baseline") 
+            ax.set_xlabel("Time, 10 ns")  
+            ax.set_title("BDT score: {:.2f}\nEvent {}, Channel {}, Waveform {}".format(score,int(lab[0]), int(lab[1]), int(lab[2])))
             num = '{:04}'.format(num_wf)
             fig.savefig("./plots/wf{}.png".format(num))         
             if num_wf >= max_wf:
                 break
             num_wf += 1
-
             ax.clear()  
         fres.close()
         fwf.close() 
@@ -159,7 +162,7 @@ if __name__ == '__main__':
     #applier = BDT_Application()
     #applier.load_methods(weights) 
     #applier.sample_BDT(hdf_var) 
-    BDT_Application.view_waveforms('BDTresults.hdf5',hdf_wf,max_wf=10)
+    BDT_Application.view_waveforms('BDTresults.hdf5',hdf_wf,max_wf=100)
 
 
 
