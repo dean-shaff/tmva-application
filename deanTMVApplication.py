@@ -111,8 +111,6 @@ class BDT_Application(object):
             if (ievt % 1000 == 0):
                 print("{} waveforms done, {} left to go!".format(ievt, dat.shape[0] - ievt)) 
         labels = dat[:,:3]
-        for i in xrange(100):
-            print(labels[i]) 
         result_labels = np.hstack((labels, result.T))
         print("Finished up creating BDT scores. Saving now...")
         f = h5py.File("BDTresults.hdf5","w") 
@@ -157,16 +155,10 @@ class BDT_Application(object):
 if __name__ == '__main__':
     weights_dir = "/home/dean/capstone/TMVA-classifier/weights/" 
     weights = [os.path.join(weights_dir,f) for f in os.listdir(weights_dir) if ".xml" in f] 
-    hdf_var = "var_files/varHL_12000_19-06_no_norm_by-wf_all.hdf5"
-    hdf_wf = "var_files/wfsHL_12000_19-06_no_norm_by-wf_all.hdf5"
+    weights = ["/home/dean/capstone/TMVA-classifier/weights/TMVAClassification_BDT_ntrees200_maxdepth10_ncuts3_top.weights.xml"]
+    hdf_var = "var_files/varHL_12000_19-06_no_norm_by-wf_top.hdf5"
+    hdf_wf = "var_files/wfsHL_12000_19-06_no_norm_by-wf_top.hdf5"
     #applier = BDT_Application()
     #applier.load_methods(weights) 
     #applier.sample_BDT(hdf_var) 
-    BDT_Application.view_waveforms('BDTresults.hdf5',hdf_wf,max_wf=100)
-
-
-
-
-
-
-    
+    BDT_Application.view_waveforms('BDTresults_top.hdf5',hdf_wf,max_wf=100)
